@@ -1,9 +1,22 @@
-function App() {
-  return (
-    <>
-      <p className="text-3xl font-medium bg-red-600 text-white">hello world</p>
-    </>
-  );
-}
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import Main from "./layouts/main";
+import AuthPage from "./pages/authPage";
+
+const App = () => {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Main />,
+      children: [
+        {
+          path: "/auth",
+          element: <AuthPage />,
+        },
+      ],
+    },
+  ]);
+  return <RouterProvider router={router} />;
+};
 
 export default App;
