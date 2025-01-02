@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export interface IUser extends Document {
+  //_id: string;
   name: string;
   email: string;
   password: string;
@@ -38,7 +39,7 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
   const token = jwt.sign(
-    { _id: user._id.toString() },
+    { _id: user.id.toString() },
     process.env.JWT_KEY as string
   );
   user.tokens = user.tokens.concat({ token });

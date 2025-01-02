@@ -38,3 +38,5 @@ const auth = async (req: CustomRequest, res: Response, next: NextFunction) => {
     res.status(401).send({ error: "Authentication failed." });
   }
 };
+
+export default auth;

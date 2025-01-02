@@ -1,7 +1,7 @@
 import User from "../models/User";
 import { IUser } from "../models/User";
 
-export const createUser = async (user: Partial<IUser>) => {
+export const registerUser = async (user: Partial<IUser>) => {
   const { name, email, password } = user;
   if (!name || !email || !password) {
     return { error: "Please provide all the required fields" };
