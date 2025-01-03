@@ -5,7 +5,9 @@ const Mail = () => {
   return (
     <div>
       <Navbar />
-      <Outlet />
+      <section className="p-10">
+        <Outlet />
+      </section>
     </div>
   );
 };
