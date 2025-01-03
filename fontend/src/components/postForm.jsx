@@ -33,7 +33,7 @@ const editorFormats = [
 
 const PostForm = ({ uiTitle, uiBtnText }) => {
   return (
-    <section className="w-2/3 mx-auto">
+    <section className="w-full mx-auto">
       <h2 className="text-center font-blod text-2xl mb-3">{uiTitle}</h2>
       <form>
         <div className="mb-4">
@@ -47,7 +47,7 @@ const PostForm = ({ uiTitle, uiBtnText }) => {
             className="file-input file-input-bordered w-full "
           />
         </div>
-        <div className="mb-20">
+        <div className="mb-24">
           <label>Enter your post description </label>
           <ReactQuill
             theme="snow"

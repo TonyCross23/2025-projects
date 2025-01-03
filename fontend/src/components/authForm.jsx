@@ -5,7 +5,7 @@ const AuthForm = () => {
   const [searchParans] = useSearchParams();
   const isLoginMode = searchParans.get("mode") === "login";
   return (
-    <section className="w-1/2 mx-auto">
+    <section className="w-full mx-auto">
       <h2 className="text-center font-blod text-2xl mb-3">
         {isLoginMode ? "Login" : "Register"} Form
       </h2>
