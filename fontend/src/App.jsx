@@ -4,6 +4,8 @@ import Main from "./layouts/main";
 import AuthPage from "./pages/authPage";
 import Home from "./pages/home";
 import PostDetails from "./pages/postDetails";
+import EditPage from "./pages/editPage";
+import PostCreate from "./pages/postCreate";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -22,6 +24,14 @@ const App = () => {
         {
           path: "/post/:id",
           element: <PostDetails />,
+        },
+        {
+          path: "/post/create",
+          element: <PostCreate />,
+        },
+        {
+          path: "/post/edit/:id",
+          element: <EditPage />,
         },
       ],
     },
