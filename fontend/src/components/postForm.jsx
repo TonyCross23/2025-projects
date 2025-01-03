@@ -47,14 +47,17 @@ const PostForm = ({ uiTitle, uiBtnText }) => {
             className="file-input file-input-bordered w-full "
           />
         </div>
-        <ReactQuill
-          theme="snow"
-          className="h-28 mb-20"
-          modules={{
-            toolbar: toolbarOptions,
-          }}
-          formats={editorFormats}
-        />
+        <div className="mb-20">
+          <label>Enter your post description </label>
+          <ReactQuill
+            theme="snow"
+            className="h-28"
+            modules={{
+              toolbar: toolbarOptions,
+            }}
+            formats={editorFormats}
+          />
+        </div>
         <button className="btn btn-neutral w-full">{uiBtnText}</button>
       </form>
     </section>
