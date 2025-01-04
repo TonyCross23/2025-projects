@@ -7,7 +7,7 @@ const PostItem = () => {
     <div>
       {fakeData.map((post) => (
         <Link to={`/post/${post.id}`} key={post.id}>
-          <div className="my-6 p-2 bg-slate-50 rounded-sm">
+          <div className="my-6 p-2 bg-slate-50 rounded-sm dark:bg-gray-800">
             <h2 className=" font-medium uppercase">{post.title}</h2>
             <p>
               <small className="text-muted">
