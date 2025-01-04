@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { redirect, useSearchParams } from "react-router-dom";
+import { Navigate, redirect, useSearchParams } from "react-router-dom";
 
 const AuthForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   const [searchParans, setSearchParans] = useSearchParams();
   const isLoginMode = searchParans.get("mode") === "login";
@@ -19,11 +20,15 @@ const AuthForm = () => {
     });
 
     if (res.ok) {
-      return redirect("/");
+      setRedirect(true);
     } else {
       alert("Something went wrong");
     }
   };
+
+  if (redirect) {
+    return <Navigate to="/" />;
+  }
   const register = async () => {
     const res = await fetch(`${import.meta.env.VITE_URL}/register`, {
       method: "POST",

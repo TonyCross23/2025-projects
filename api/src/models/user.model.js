@@ -34,8 +34,5 @@ const UserSchema = new Schema(
   }
 );
 
-// Ensure the username is unique
-UserSchema.index({ username: 1 }, { unique: true });
-
 // Create the Mongoose model
 export const User = model("User", UserSchema);
