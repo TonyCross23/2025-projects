@@ -7,7 +7,7 @@ import { router } from "./routes/user.router.js";
 const app = express();
 dotenv.config();
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ credentials: true, origin: true }));
 app.use(express.json());
 
 const port = process.env.PORT || 9000;

@@ -7,19 +7,19 @@ class UserController {
   addUser = async (req, res) => {
     const { username, password } = req.body;
 
-    // Joi validation
-    const { error } = UserSchemaValidation.validate({ username, password });
-
-    if (error) {
-      return res.status(400).json({ error: error.details[0].message });
-    }
-
     // Hash password before saving
     const salt = bcrypt.genSaltSync(10);
     const data = {
       username,
       password: bcrypt.hashSync(password, salt),
     };
+
+    // Joi validation
+    const { error } = UserSchemaValidation.validate(data);
+
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
 
     try {
       // Call the service to create the user

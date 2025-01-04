@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { redirect, useSearchParams } from "react-router-dom";
 
 const AuthForm = () => {
   const [username, setUsername] = useState("");
@@ -8,9 +8,24 @@ const AuthForm = () => {
   const [searchParans, setSearchParans] = useSearchParams();
   const isLoginMode = searchParans.get("mode") === "login";
 
-  const login = () => {};
-  const register = () => {
-    const res = fetch(`${import.meta.env.VITE_URL}/register`, {
+  const login = async () => {
+    const res = await fetch(`${import.meta.env.VITE_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (res.ok) {
+      return redirect("/");
+    } else {
+      alert("Something went wrong");
+    }
+  };
+  const register = async () => {
+    const res = await fetch(`${import.meta.env.VITE_URL}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,9 +34,11 @@ const AuthForm = () => {
     });
 
     if (res.ok) {
-      setSearchParans({ mode: "login" });
+      setSearchParans("mode=login");
+      setUsername("");
+      setPassword("");
     } else {
-      console.log("Failed to register");
+      alert("Something went wrong");
     }
   };
 
@@ -39,7 +56,7 @@ const AuthForm = () => {
       <h2 className="text-center font-blod text-2xl mb-3">
         {isLoginMode ? "Login" : "Register"} Form
       </h2>
-      <form method="POST" onSubmit={handleSubmit}>
+      <form method="post" onSubmit={handleSubmit}>
         <div className="mb-4">
           <label>Enter your name</label>
           <input
@@ -60,7 +77,7 @@ const AuthForm = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button className="btn btn-neutral w-full">
+        <button type="submit" className="btn btn-neutral w-full">
           {isLoginMode ? "Login" : "Register"} Account
         </button>
       </form>
