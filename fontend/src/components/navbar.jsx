@@ -37,12 +37,13 @@ const Navbar = () => {
             <Link to={"/post/create"} className="btn btn-outline">
               Create post
             </Link>
-            <p
+            <Link
               onClick={logout}
+              to={"/auth?mode=login"}
               className="btn btn-error text-white cursor-pointer"
             >
               Logout
-            </p>
+            </Link>
           </>
         ) : (
           <>
