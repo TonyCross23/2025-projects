@@ -6,6 +6,7 @@ import Home from "./pages/home";
 import PostDetails from "./pages/postDetails";
 import EditPage from "./pages/editPage";
 import PostCreate from "./pages/postCreate";
+import { UserContextProvider } from "./context/userContext";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -36,7 +37,11 @@ const App = () => {
       ],
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <UserContextProvider>
+      <RouterProvider router={router} />
+    </UserContextProvider>
+  );
 };
 
 export default App;

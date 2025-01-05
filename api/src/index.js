@@ -3,9 +3,11 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { db } from "./config/db.config.js";
 import { router } from "./routes/user.router.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 dotenv.config();
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ credentials: true, origin: true }));
 app.use(express.json());

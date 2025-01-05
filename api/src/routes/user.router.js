@@ -34,3 +34,17 @@ router.post("/login", async (req, res) => {
     console.log(error);
   }
 });
+
+//get uer data
+router.get("/profile", (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, process.env.JWT_SECRET, {}, (err, useInfo) => {
+    if (err) throw err;
+    res.json(useInfo);
+  });
+});
+
+//logout
+router.post("/logout", async (req, res) => {
+  res.clearCookie("token", "").json({ message: "Logged out" });
+});

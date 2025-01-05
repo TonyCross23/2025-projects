@@ -1,10 +1,12 @@
-import { useState } from "react";
-import { Navigate, redirect, useSearchParams } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Navigate, useSearchParams } from "react-router-dom";
+import { UserContext } from "../context/userContext";
 
 const AuthForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const { setUserInfo } = useContext(UserContext);
 
   const [searchParans, setSearchParans] = useSearchParams();
   const isLoginMode = searchParans.get("mode") === "login";
@@ -20,6 +22,7 @@ const AuthForm = () => {
     });
 
     if (res.ok) {
+      setUserInfo(await res.json());
       setRedirect(true);
     } else {
       alert("Something went wrong");
