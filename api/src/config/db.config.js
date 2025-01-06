@@ -4,10 +4,8 @@ import mongoose from "mongoose";
 dotenv.config();
 
 //details for env
-const username = process.env.username;
-const password = process.env.password;
 
-const connectionString = `mongodb+srv://${username}:${password}@cluster0.slejs.mongodb.net/auth?retryWrites=true&w=majority`;
+const connectionString = `mongodb://localhost:27017/`;
 
 const options = {
   autoIndex: false, // Don't build indexes
