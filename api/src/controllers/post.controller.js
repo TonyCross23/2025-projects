@@ -33,6 +33,17 @@ class postController {
       return res.status(401).json({ error: "Unauthorized" });
     }
   };
+
+  getPosts = async (req, res) => {
+    const posts = await postService.getAllPosts();
+    res.json(posts).status(200);
+  };
+
+  getPost = async (req, res) => {
+    const { id } = req.params;
+    const post = await postService.getpostById(id);
+    res.json(post).status(200);
+  };
 }
 
 export default new postController();

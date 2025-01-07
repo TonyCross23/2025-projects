@@ -52,3 +52,5 @@ router.post("/logout", async (req, res) => {
 
 //post router
 router.post("/post/create", postController.addPost);
+router.get("/posts", postController.getPosts);
+router.get("/post/:id", postController.getPost);
