@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 const toolbarOptions = [
   [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -38,6 +38,16 @@ const PostForm = ({ uiTitle, uiBtnText, isEditing }) => {
   const [content, setContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const [editPostId, setEditPostId] = useState("");
+  const params = useParams();
+
+  let fetchUrl = `${import.meta.env.VITE_URL}/post/create`;
+  let method = "POST";
+
+  if (isEditing) {
+    fetchUrl = `${import.meta.env.VITE_URL}/post/update`;
+    method = "PUT";
+  }
 
   const uploadSubmit = async (e) => {
     e.preventDefault();
@@ -45,9 +55,10 @@ const PostForm = ({ uiTitle, uiBtnText, isEditing }) => {
     formData.append("title", title);
     formData.append("content", content);
     formData.append("imageUrl", imageUrl);
+    formData.append("post__id", editPostId);
 
-    const res = await fetch(`${import.meta.env.VITE_URL}/post/create`, {
-      method: "POST",
+    const res = await fetch(fetchUrl, {
+      method,
       body: formData,
       credentials: "include",
     });
@@ -58,6 +69,24 @@ const PostForm = ({ uiTitle, uiBtnText, isEditing }) => {
       alert("Something went wrong");
     }
   };
+
+  const getoldPost = async () => {
+    const res = await fetch(
+      `${import.meta.env.VITE_URL}/post/edit/${params.id}`
+    );
+    const post = await res.json();
+    const { title, content, imageUrl, _id } = post;
+    setTitle(title);
+    setContent(content);
+    setImageUrl(imageUrl);
+    setEditPostId(_id);
+  };
+
+  useEffect((_) => {
+    if (isEditing) {
+      getoldPost();
+    }
+  }, []);
 
   if (redirect) {
     return <Navigate to="/" />;
@@ -89,7 +118,7 @@ const PostForm = ({ uiTitle, uiBtnText, isEditing }) => {
           <label>Enter your post description </label>
           <ReactQuill
             theme="snow"
-            className="h-28"
+            className="h-48"
             modules={{
               toolbar: toolbarOptions,
             }}

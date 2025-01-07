@@ -27,6 +27,39 @@ class postService {
     const post = await Post.findById(_id).populate("author", "username");
     return post;
   }
+
+  async getOldData(_id) {
+    if (!_id) throw new Error("Post ID is required");
+
+    const post = await Post.findById(_id);
+    return post;
+  }
+
+  async updatePostById(_id, data) {
+    try {
+      const postDOc = await Post.findByIdAndUpdate(_id, data, {
+        new: true,
+      });
+      if (!postDOc) {
+        return res.json("post not found!");
+      }
+      return postDOc;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async deletePostById(_id) {
+    try {
+      const post = await Post.findByIdAndDelete(_id);
+      if (!post) {
+        throw new Error("post not found");
+      }
+      return post;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 export default new postService();

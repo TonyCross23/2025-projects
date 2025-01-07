@@ -54,3 +54,6 @@ router.post("/logout", async (req, res) => {
 router.post("/post/create", postController.addPost);
 router.get("/posts", postController.getPosts);
 router.get("/post/:id", postController.getPost);
+router.get("/post/edit/:id", postController.getOldPost);
+router.put("/post/update/", postController.updatePost);
+router.delete("/post/:id", postController.deletePostById);
