@@ -3,6 +3,7 @@ import userController from "../controllers/user.controller.js";
 import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import postController from "../controllers/post.controller.js";
 
 export const router = express.Router();
 
@@ -48,3 +49,6 @@ router.get("/profile", (req, res) => {
 router.post("/logout", async (req, res) => {
   res.clearCookie("token", "").json({ message: "Logged out" });
 });
+
+//post router
+router.post("/post/create", postController.addPost);
