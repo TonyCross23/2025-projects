@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  node-app:
+    build:
+      context: .
+      args:
+        NODE_ENV: developement
+    volumes:
+      - ./:/app
+      - /app/node_modules
+
+    environment:
+      - NODE_ENV=developement
+    command: pnpm run dev
