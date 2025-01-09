@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3"
 services:
   node-app:
     build:
@@ -11,4 +11,4 @@ services:
 
     environment:
       - NODE_ENV=developement
-    command: pnpm run dev
+    command: ["pnpm", "run", "dev"]
