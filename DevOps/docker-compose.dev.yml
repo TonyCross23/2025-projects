@@ -11,4 +11,12 @@ services:
 
     environment:
       - NODE_ENV=developement
+      - MONGO_USER=root
+      - MONGO_PASSWORD=mypassword
+
     command: ["pnpm", "run", "dev"]
+  mongo:
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=mypassword
