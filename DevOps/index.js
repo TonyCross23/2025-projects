@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { MONGO_USER, MONGO_PASSWORD, MONGO_IP } = require("./configs/config.js");
+const postRouter = require("./routes/post.router.js");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,6 +19,9 @@ const connectWithRetry = () => {
 };
 
 connectWithRetry();
+
+app.use(express.json());
+app.use("/api/v1/posts", postRouter);
 
 app.get("/", (req, res) => {
   res.send("<h2>Hello World , i am Tony, Hehe<h2>");
