@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const postRouter = require("./routes/post.router.js");
 const userRouter = require("./routes/user.router.js");
 const session = require("express-session");
-const redis = require("redis");
-let ReidsStore = require("connect-redis")(session);
+const redis = require("redis"); // Ensure we're using the older version of redis
+let RedisStore = require("connect-redis")(session);
 
 const {
   MONGO_USER,
@@ -21,7 +21,6 @@ const port = process.env.PORT || 3000;
 let redisClient = redis.createClient({
   host: REDIS_URL,
   port: REDIS_PORT,
-  legacyMode: true,
 });
 
 const connectWithRetry = () => {
@@ -38,21 +37,26 @@ const connectWithRetry = () => {
 
 connectWithRetry();
 
-// Connect to Redis server
-redisClient.connect().catch((err) => {
+// Redis connection event listeners
+redisClient.on("connect", () => {
+  console.log("Connected to Redis successfully");
+});
+
+redisClient.on("error", (err) => {
   console.error("Error connecting to Redis:", err);
 });
 
 app.use(
   session({
-    store: new ReidsStore({ client: redisClient }),
+    store: new RedisStore({ client: redisClient }),
     secret: SESSION_SECRET,
+
     cookie: {
       resave: false,
       saveUninitialized: false,
-      secure: false,
       httpOnly: true,
-      maxAge: 30000,
+      secure: false,
+      maxAge: 30000, // 30 seconds
     },
   })
 );
@@ -62,9 +66,9 @@ app.use("/api/v1/posts", postRouter);
 app.use("/api/v1/user", userRouter);
 
 app.get("/", (req, res) => {
-  res.send("<h2>Hello World , i am Tony, Hehe<h2>");
+  res.send("<h2>Hello World , I am Tony, Hehe<h2>");
 });
 
 app.listen(port, () => {
-  console.log(`server is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
