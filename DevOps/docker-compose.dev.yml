@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3"
 services:
   node-app:
     build:
@@ -13,6 +13,7 @@ services:
       - NODE_ENV=developement
       - MONGO_USER=root
       - MONGO_PASSWORD=mypassword
+      - SESSION_SECRET=secret
 
     command: ["pnpm", "run", "dev"]
   mongo:

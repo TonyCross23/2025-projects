@@ -1,6 +1,5 @@
 const User = require("../models/user.model.js");
 const bcrypt = require("bcrypt");
-const
 
 exports.signUp = async (req, res) => {
   const { username, password } = req.body;
@@ -19,6 +18,7 @@ exports.signUp = async (req, res) => {
   } catch (e) {
     res.status(400).json({
       status: "fail",
+      message: e.message,
     });
   }
 };
