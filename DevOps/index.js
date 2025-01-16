@@ -1,9 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const postRouter = require("./routes/post.router.js");
 const userRouter = require("./routes/user.router.js");
 const session = require("express-session");
-const redis = require("redis"); // Ensure we're using the older version of redis
+const redis = require("redis");
 let RedisStore = require("connect-redis")(session);
 
 const {
@@ -46,6 +47,8 @@ redisClient.on("error", (err) => {
   console.error("Error connecting to Redis:", err);
 });
 
+app.enable("trust proxy");
+app.use(cors({}));
 app.use(
   session({
     store: new RedisStore({ client: redisClient }),
@@ -62,6 +65,12 @@ app.use(
 );
 
 app.use(express.json());
+
+app.get("/api/v1", (req, res) => {
+  res.send("<h1>Hello docker</h1>");
+  console.log("Hello nginx");
+});
+
 app.use("/api/v1/posts", postRouter);
 app.use("/api/v1/user", userRouter);
 
