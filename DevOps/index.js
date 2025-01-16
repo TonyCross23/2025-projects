@@ -59,7 +59,7 @@ app.use(
       saveUninitialized: false,
       httpOnly: true,
       secure: false,
-      maxAge: 30000, // 30 minutes
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7day
     },
   })
 );
