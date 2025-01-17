@@ -17,8 +17,9 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
-    command: node index.js
+    command: ["node", "index.js"]
   mongo:
+    restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
