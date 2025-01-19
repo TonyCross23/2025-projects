@@ -1,6 +1,3 @@
-### This is a project accompanying Nginx Crash Course
-
-### Commands used in the tutorial
 
 ##### start nginx
 `nginx`
