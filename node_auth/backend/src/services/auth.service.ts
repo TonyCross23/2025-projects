@@ -6,6 +6,8 @@ import UserModel from "../models/user.model";
 import VerificationCodeModel from "../models/verification.model";
 import { oneYearFromNow } from "../utils/data";
 import jwt from "jsonwebtoken";
+import appAssert from "../utils/appAssert";
+import { CONFLICT } from "../constants/http";
 
 type CreateAccountParams = {
   email: string;
@@ -17,9 +19,12 @@ export const createAccount = async (data: CreateAccountParams) => {
   //validation existing user doesn't exist
   const existingUser = await UserModel.exists({ email: data.email });
 
-  if (existingUser) {
-    throw new Error("User already exists");
-  }
+  appAssert(!existingUser, CONFLICT, "Email already exists");
+
+  //if (existingUser) {
+  //  throw new Error("User already exists");
+  //}
+
   //create user
   const user = await UserModel.create({
     email: data.email,
@@ -63,7 +68,7 @@ export const createAccount = async (data: CreateAccountParams) => {
 
   //return user & token
   return {
-    user,
+    user: user.omitPassword(),
     accessToken,
     refreshToken,
   };
