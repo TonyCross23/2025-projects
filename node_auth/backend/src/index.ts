@@ -6,6 +6,7 @@ import { APP_ORIGIN, PORT } from "./constants/env";
 import errorHandler from "./middlewares/errorHandler";
 import { OK } from "./constants/http";
 import authRouters from "./routes/auth.router";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser());
 
 app.get("/", (req, res, next) => {
   throw new Error("this is test error");
