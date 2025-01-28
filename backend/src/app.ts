@@ -13,9 +13,11 @@ app.use(express.json());
 //router
 app.use("/api", router);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, () => {
-  connectDB();
+app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
+  await connectDB();
 });
+
+export default app;
