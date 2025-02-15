@@ -7,12 +7,9 @@ import authRouter from "./routes/auth.router";
 const port = config.get("port") as number;
 
 const app = express();
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-app.use("/api/v1", authRouter);
+app.use("/", authRouter);
 
 app.listen(port, async () => {
   logger.info(`Server running at http://localhost:${port}`);
