@@ -1,10 +1,37 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useStateContext } from "../contexts/contextProvider";
+import axiosClient from "../axiosClient";
 
 const Login = () => {
+    const nameRef = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+
+    const { setUser, setToken } = useStateContext();
+    const navigate = useNavigate();
+
     const login = (e) => {
         e.preventDefault();
-        console.log("hehe");
+        const payload = {
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+        };
+        console.log(payload);
+
+        axiosClient
+            .post("/login", payload)
+            .then(({ data }) => {
+                setUser(data.user);
+                setToken(data.token);
+                navigate("/");
+            })
+            .catch((err) => {
+                const response = err.response;
+                if (response && response.status === 422) {
+                    console.log(response.data.errors);
+                }
+            });
     };
 
     return (
@@ -25,6 +52,7 @@ const Login = () => {
                     <input
                         type="text"
                         name="email"
+                        ref={emailRef}
                         className="grow outline-none"
                         placeholder="Email"
                     />
@@ -46,6 +74,7 @@ const Login = () => {
                     <input
                         type="password"
                         name="password"
+                        ref={passwordRef}
                         className="grow outline-none"
                         placeholder="Password"
                     />

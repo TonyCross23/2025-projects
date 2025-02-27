@@ -1,6 +1,8 @@
-import { useContext, useState, createContext } from "react";
+import { useContext } from "react";
+import { useState } from "react";
+import { createContext } from "react";
 
-const stateContext = createContext({
+const StateContext = createContext({
     user: null,
     token: null,
     setUser: () => {},
@@ -19,9 +21,8 @@ export const ContextProvider = ({ children }) => {
             localStorage.removeItem("ACCESS_TOKEN");
         }
     };
-
     return (
-        <stateContext.Provider
+        <StateContext.Provider
             value={{
                 user,
                 token,
@@ -30,8 +31,8 @@ export const ContextProvider = ({ children }) => {
             }}
         >
             {children}
-        </stateContext.Provider>
+        </StateContext.Provider>
     );
 };
 
-export const useStateContext = () => useContext(stateContext);
+export const useStateContext = () => useContext(StateContext);
