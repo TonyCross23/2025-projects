@@ -31,7 +31,6 @@ const User = () => {
                 setIsLoading(false);
             });
     };
-    console.log(users);
 
     return (
         <>
@@ -68,12 +67,12 @@ const User = () => {
                                     <td>{u.name}</td>
                                     <td>{u.email}</td>
                                     <td className="flex gap-3">
-                                        <button
+                                        <Link
                                             to={"/users/" + u.id}
                                             className="btn btn-outline btn-success"
                                         >
                                             Edit
-                                        </button>
+                                        </Link>
                                         <button
                                             onClick={(e) => onDeleteClick(u)}
                                             className="btn btn-outline btn-error"
