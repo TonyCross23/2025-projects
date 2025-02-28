@@ -1,10 +1,38 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axiosClient from "../axiosClient";
+import { useStateContext } from "../contexts/contextProvider";
 
 const Register = () => {
+    const nameRef = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+
+    const { setUser, setToken } = useStateContext();
+    const navigate = useNavigate();
+
     const register = (e) => {
         e.preventDefault();
-        console.log("hehe");
+        const payload = {
+            name: nameRef.current.value,
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+        };
+        console.log(payload);
+
+        axiosClient
+            .post("/register", payload)
+            .then(({ data }) => {
+                setUser(data.user);
+                setToken(data.token);
+                navigate("/");
+            })
+            .catch((err) => {
+                const response = err.response;
+                if (response && response.status === 422) {
+                    console.log(response.data.errors);
+                }
+            });
     };
 
     return (
@@ -24,6 +52,7 @@ const Register = () => {
                     <input
                         type="text"
                         name="name"
+                        ref={nameRef}
                         className="grow outline-none"
                         placeholder="Username"
                     />
@@ -42,6 +71,7 @@ const Register = () => {
                     <input
                         type="text"
                         name="email"
+                        ref={emailRef}
                         className="grow outline-none"
                         placeholder="Email"
                     />
@@ -63,6 +93,7 @@ const Register = () => {
                     <input
                         type="password"
                         name="password"
+                        ref={passwordRef}
                         className="grow outline-none"
                         placeholder="Password"
                     />
@@ -75,7 +106,10 @@ const Register = () => {
                     </Link>
                 </p>
 
-                <button className="bg-blue-500 text-white py-2 px-4 rounded-lg w-full hover:bg-blue-600 transition">
+                <button
+                    type="submit"
+                    className="bg-blue-500 text-white py-2 px-4 rounded-lg w-full hover:bg-blue-600 transition"
+                >
                     Register
                 </button>
             </form>
