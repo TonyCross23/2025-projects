@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Student\StudentCreate;
+use App\Livewire\Student\StudentEdit;
 use App\Livewire\Student\StudentShow;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -17,6 +18,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get("/students", StudentShow::class)->name("students.index");
     Route::get("/student/create", StudentCreate::class)->name("students.create");
+    Route::get("/student/{id}/edit", StudentEdit::class)->name("student.edit");
 
     Route::redirect('settings', 'settings/profile');
 
