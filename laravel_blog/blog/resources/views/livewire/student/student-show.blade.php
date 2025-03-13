@@ -3,6 +3,10 @@
         <h1 class="text-3xl">Students</h1>
         <flux:button wire:navigate href="/student/create" variant="primary">Create Student</flux:button>
     </div>
+    <div class="flex w-xl mb-4">
+        <flux:input wire:model="textInput" placehoder="Search" class="me-2" />
+        <flux:button wire:click='search' variant="primary">Search</flux:button>
+    </div>
     <div class="w-full">
         <x-message></x-message>
         <table class="w-full border-collapse">

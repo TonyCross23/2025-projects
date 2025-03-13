@@ -10,6 +10,10 @@ class StudentShow extends Component
 {
     use WithPagination;
 
+    protected $queryString = ['keyword'];
+    public $keyword        = '';
+    public $textInput      = '';
+
     public function delete($id)
     {
         $student = Student::find($id);
@@ -21,7 +25,15 @@ class StudentShow extends Component
 
     public function render()
     {
-        $students = Student::orderBy('id', 'desc')->paginate(10);
+        $students = Student::orderBy('id', 'desc')
+            ->where("name", 'like', '%' . $this->keyword . '%')
+            ->orWhere("email", 'like', '%' . $this->keyword . '%')
+            ->paginate(10);
         return view('livewire.student.student-show', compact('students'));
+    }
+
+    public function search()
+    {
+        $this->keyword = $this->textInput;
     }
 }
